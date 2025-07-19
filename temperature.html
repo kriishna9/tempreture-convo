@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Temperature Converter</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      * {
+        box-sizing: border-box;
+        font-family: "Poppins", sans-serif;
+      }
+
+      body {
+        margin: 0;
+        height: 100vh;
+        background: linear-gradient(135deg, #a1c4fd, #c2e9fb);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        backdrop-filter: blur(5px);
+      }
+
+      .card {
+        background: rgba(255, 255, 255, 0.2);
+        border: 1px solid rgba(255, 255, 255, 0.3);
+        box-shadow: 0 8px 32px rgba(31, 38, 135, 0.2);
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
+        border-radius: 20px;
+        padding: 35px;
+        width: 360px;
+        color: #111827;
+        text-align: center;
+        transition: all 0.3s ease-in-out;
+      }
+
+      h2 {
+        font-size: 24px;
+        margin-bottom: 25px;
+        color: #1f2937;
+      }
+
+      label {
+        display: block;
+        text-align: left;
+        margin-top: 18px;
+        margin-bottom: 6px;
+        font-weight: 600;
+        color: #374151;
+      }
+
+      input,
+      select {
+        width: 100%;
+        padding: 12px;
+        border-radius: 12px;
+        border: 2px solid rgba(0, 0, 0, 0.1);
+        background-color: rgba(255, 255, 255, 0.8);
+        font-size: 15px;
+        color: #111827;
+        outline: none;
+        transition: 0.3s ease;
+      }
+
+      input:focus,
+      select:focus {
+        border-color: #3b82f6;
+        box-shadow: 0 0 8px rgba(59, 130, 246, 0.5);
+        background-color: #ffffff;
+      }
+
+      input::placeholder {
+        color: #9ca3af;
+      }
+
+      button {
+        margin-top: 25px;
+        width: 100%;
+        padding: 12px;
+        background: linear-gradient(to right, #3b82f6, #6366f1);
+        border: none;
+        border-radius: 12px;
+        color: #fff;
+        font-weight: 600;
+        font-size: 16px;
+        cursor: pointer;
+        transition: 0.3s ease;
+        box-shadow: 0 0 15px rgba(99, 102, 241, 0.5);
+      }
+
+      button:hover {
+        background: linear-gradient(to right, #6366f1, #3b82f6);
+        transform: scale(1.02);
+        box-shadow: 0 0 20px rgba(99, 102, 241, 0.7);
+      }
+
+      #result {
+        margin-top: 20px;
+        font-size: 18px;
+        font-weight: bold;
+        color: #10b981;
+        transition: color 0.3s;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="card">
+      <h2>⭕️ Temperature Converter</h2>
+
+      <label for="temp">Enter Temperature</label>
+      <input type="number" id="temp" placeholder="E.g. 100" />
+
+      <label for="type">Conversion Type</label>
+      <select id="type">
+        <option value="f_to_c">Fahrenheit ➜ Celsius</option>
+        <option value="c_to_f">Celsius ➜ Fahrenheit</option>
+        <option value="c_to_k">Celsius ➜ Kelvin</option>
+        <option value="k_to_c">Kelvin ➜ Celsius</option>
+        <option value="f_to_k">Fahrenheit ➜ Kelvin</option>
+        <option value="k_to_f">Kelvin ➜ Fahrenheit</option>
+      </select>
+
+      <button onclick="convert()">Convert</button>
+
+      <div id="result"></div>
+    </div>
+
+    <footer
+      style="
+        position: absolute;
+        bottom: 20px;
+        width: 100%;
+        text-align: center;
+        color: #374151;
+        font-size: 14px;
+        font-weight: 500;
+        backdrop-filter: blur(10px);
+        background-color: rgba(255, 255, 255, 0.3);
+        padding: 10px 0;
+        border-top: 1px solid rgba(0, 0, 0, 0.05);
+        box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.05);
+      "
+    >
+      ©
+      <span style="color: #111827; font-weight: 600">Krishna Moni Konwar</span>
+      | All rights reserved 🌐
+    </footer>
+
+    <script>
+      function convert() {
+        const temp = parseFloat(document.getElementById("temp").value);
+        const type = document.getElementById("type").value;
+        const resultBox = document.getElementById("result");
+
+        if (isNaN(temp)) {
+          resultBox.innerHTML = "⚠️ Please enter a valid number!";
+          resultBox.style.color = "#ef4444";
+          return;
+        }
+
+        let result = "";
+        switch (type) {
+          case "f_to_c":
+            result = (((temp - 32) * 5) / 9).toFixed(2);
+            resultBox.innerHTML = `✅ ${temp}°F = ${result}°C`;
+            break;
+          case "c_to_f":
+            result = ((temp * 9) / 5 + 32).toFixed(2);
+            resultBox.innerHTML = `✅ ${temp}°C = ${result}°F`;
+            break;
+          case "c_to_k":
+            result = (temp + 273.15).toFixed(2);
+            resultBox.innerHTML = `✅ ${temp}°C = ${result}K`;
+            break;
+          case "k_to_c":
+            result = (temp - 273.15).toFixed(2);
+            resultBox.innerHTML = `✅ ${temp}K = ${result}°C`;
+            break;
+          case "f_to_k":
+            result = (((temp - 32) * 5) / 9 + 273.15).toFixed(2);
+            resultBox.innerHTML = `✅ ${temp}°F = ${result}K`;
+            break;
+          case "k_to_f":
+            result = (((temp - 273.15) * 9) / 5 + 32).toFixed(2);
+            resultBox.innerHTML = `✅ ${temp}K = ${result}°F`;
+            break;
+          default:
+            resultBox.innerHTML = "❌ Invalid conversion type.";
+            resultBox.style.color = "#ef4444";
+            return;
+        }
+
+        resultBox.style.color = "#10b981";
+      }
+    </script>
+  </body>
+</html>
